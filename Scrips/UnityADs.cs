@@ -3,8 +3,7 @@ using UnityEngine;
 using UnityEngine.Advertisements;	
 public class UnityADs : MonoBehaviour {
 	public string id;
-	public bool edit; 
-	private bool _startAds = false;
+	public bool edit, startAd;
 	void Awake () {
 		#if UNITY_IOS || UNITY_ANDROID
 		Advertisement.Initialize(id, edit);                          
@@ -12,8 +11,8 @@ public class UnityADs : MonoBehaviour {
 	}
 	void Update () {
 		#if UNITY_IOS || UNITY_ANDROID
-		if (Advertisement.isShowing==false && _startAds==true){
-			_startAds = false;
+		if (Advertisement.isShowing==false && startAd==true){
+			startAd = false;
 		}
 		#endif
 	}
@@ -26,6 +25,6 @@ public class UnityADs : MonoBehaviour {
 		while (!Advertisement.IsReady())
 			yield return null;
 		Advertisement.Show();
-		_startAds = true;		
+		startAd = true;	
 	}
 }

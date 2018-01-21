@@ -7,15 +7,17 @@ public class Main : MonoBehaviour {
 	public Image press_img, der_img, izq_img, fle_img, win_img, vol_img, sha_img, vel_img;
 	public Text pun_text, vel_text, velf_text, sha_text, vol_text;
 	public Slider sld;
-	public Boton der_bot, izq_bot, start_bot, volver_bot, comp_bot;
+	public Boton der_bot, izq_bot, start_bot, volver_bot, comp_bot, red_bot, gre_bot, blu_bot;
 	public GameObject fin_obj;
 	public GameObject[] flechas;
 	public Color[] claro, oscuro, solido, victoria;
 	public Animator anim;
 	public float muestra, espera, min_t, ini_t;
-	public int ran, puntaje;
+	public int ran, puntaje, cont, i;
 	public bool apreta, over, presed, start, seguro, isProcessing, isFocus;
+	private UnityADs ads;
 	void Start () {
+		ads = GetComponent<UnityADs>();
 		sld.onValueChanged.AddListener(delegate {actualiza();});
 	}
 	IEnumerator ShareScreenshot(){
@@ -52,10 +54,15 @@ public class Main : MonoBehaviour {
 		start = true;
 	}
 	IEnumerator lazo(){
-		ran = Random.Range(0,3);//if(ran == 2) ran = Random.Range(0,2);//borrar
+		ran = Random.Range(0,3);
 		apreta = true;
 		flechas[ran].SetActive(true);
-		yield return new WaitForSecondsRealtime(muestra);
+		for(i=0;i<20;i++){
+			yield return new WaitForSecondsRealtime(muestra/20);
+			if(presed){
+				i = 21;
+			}
+		}
 		if(presed){
 			flechas[ran].SetActive(false);
 			apreta = false;
@@ -70,6 +77,18 @@ public class Main : MonoBehaviour {
 			over = true;
 		}
 	}
+	IEnumerator reinicia_cor(bool ad){
+		if(ad){//espera hasta que termina el ads
+			yield return new WaitUntil(() => ads.startAd==false);
+		}
+		puntaje = 0;
+		over = false;
+		flechas[ran].SetActive(false);
+		fin_obj.SetActive(false);
+		ini_t = sld.value;//se pasa el valor del slider a ini_t
+		muestra = ini_t;
+		StartCoroutine(lazo());
+	}
 	void cambia_color(int num){
 		der_img.color = new Color(solido[num].r,solido[num].g,solido[num].b,der_img.color.a);
 		izq_img.color = new Color(solido[num].r,solido[num].g,solido[num].b,izq_img.color.a);
@@ -83,7 +102,6 @@ public class Main : MonoBehaviour {
 		vol_img.color = new Color(claro[num].r,claro[num].g,claro[num].b,vol_img.color.a);
 		sha_img.color = new Color(claro[num].r,claro[num].g,claro[num].b,sha_img.color.a);
 		vel_img.color = new Color(claro[num].r,claro[num].g,claro[num].b,vel_img.color.a);
-
 	}
 	void ejecuta(bool isder){
 		if(apreta){
@@ -127,15 +145,6 @@ public class Main : MonoBehaviour {
 		isFocus = focus;
 	}
 	void Update () {
-		if(Input.GetKeyDown(KeyCode.Q)){//rojo
-			cambia_color(0);
-		}
-		if(Input.GetKeyDown(KeyCode.W)){//verde
-			cambia_color(1);
-		}
-		if(Input.GetKeyDown(KeyCode.E)){//azul
-			cambia_color(2);
-		}
 		if(start){
 			if(der_bot.down){
 				ejecuta(true);
@@ -150,17 +159,28 @@ public class Main : MonoBehaviour {
 					pun_text.text = "Felicidades,\n llegaste a\n"+puntaje+" toques\nVelocidad: "+System.Math.Round(muestra,2);
 					fin_obj.SetActive(true);
 				}else{
-					if(volver_bot.up){ 
-						puntaje = 0;
-						over = false;
-						flechas[ran].SetActive(false);
-						fin_obj.SetActive(false);
-						ini_t = sld.value;//se pasa el valor del slider a ini_t
-						muestra = ini_t;
-						StartCoroutine(lazo());
+					if(volver_bot.up){
+						if(cont >= 6){
+							ads.ShowAds();
+							cont = 0;
+							StartCoroutine(reinicia_cor(true));
+						}else{
+							cont++;
+						}
+						StartCoroutine(reinicia_cor(false));
+
 					}
 					if(comp_bot.up){
 						ShareBtnPress();
+					}
+					if(red_bot.up){
+						cambia_color(0);
+					}
+					if(gre_bot.up){
+						cambia_color(1);
+					}
+					if(blu_bot.up){
+						cambia_color(2);
 					}
 				}
 			}
