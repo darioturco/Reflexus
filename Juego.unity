@@ -207,8 +207,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   press_img: {fileID: 2011921562}
+  der_img: {fileID: 282061579}
+  izq_img: {fileID: 1001446793}
+  fle_img: {fileID: 240415248}
+  win_img: {fileID: 1987074467}
+  vol_img: {fileID: 257592142}
+  sha_img: {fileID: 1418168519}
+  vel_img: {fileID: 1064118835}
   pun_text: {fileID: 180833646}
   vel_text: {fileID: 1235353359}
+  velf_text: {fileID: 317051925}
+  sha_text: {fileID: 608661638}
+  vol_text: {fileID: 1835712966}
   sld: {fileID: 210248774}
   der_bot: {fileID: 282061578}
   izq_bot: {fileID: 1001446795}
@@ -220,6 +230,22 @@ MonoBehaviour:
   - {fileID: 222474121}
   - {fileID: 88595614}
   - {fileID: 983908508}
+  claro:
+  - {r: 0.39215687, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0.39215687, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0.39215687, a: 0}
+  oscuro:
+  - {r: 0.5882353, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0.5882353, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0.5882353, a: 0}
+  solido:
+  - {r: 1, g: 0, b: 0, a: 0}
+  - {r: 0, g: 1, b: 0, a: 0}
+  - {r: 0, g: 0, b: 1, a: 0}
+  victoria:
+  - {r: 1, g: 0, b: 1, a: 0}
+  - {r: 1, g: 1, b: 0, a: 0}
+  - {r: 0, g: 1, b: 1, a: 0}
   anim: {fileID: 2011921561}
   muestra: 2.5
   espera: 0.2
@@ -232,6 +258,8 @@ MonoBehaviour:
   presed: 0
   start: 0
   seguro: 0
+  isProcessing: 0
+  isFocus: 0
 --- !u!1 &88595614
 GameObject:
   m_ObjectHideFlags: 0
@@ -596,7 +624,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0.78431374, a: 0.5882353}
+  m_Color: {r: 0, g: 0, b: 0.5882353, a: 0.5882353}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1218,7 +1246,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1542,7 +1570,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1646,7 +1674,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 5.20
+  m_Text: 1.5
 --- !u!222 &1235353360
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2062,7 +2090,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1987074465
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2152,7 +2180,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2011921560
 RectTransform:
   m_ObjectHideFlags: 0
